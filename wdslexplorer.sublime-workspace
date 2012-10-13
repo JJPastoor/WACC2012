@@ -1,0 +1,337 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"th",
+				"thead	Tag"
+			],
+			[
+				"javasc",
+				"javascripts"
+			],
+			[
+				"d_pro",
+				"d_providerUrl"
+			],
+			[
+				"j",
+				"j"
+			],
+			[
+				"no",
+				"nostars"
+			],
+			[
+				"i",
+				"i"
+			],
+			[
+				"current",
+				"currentPage"
+			],
+			[
+				"mundiPa",
+				"mundiPaginationId"
+			],
+			[
+				"cal",
+				"calculatePages"
+			],
+			[
+				"mundiRe",
+				"mundiResultsTabs"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "WDSLExplorer/src/main/webapp/index.html",
+			"settings":
+			{
+				"buffer_size": 452,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "WDSLExplorer/src/main/webapp/templates-hidden/default.html",
+			"settings":
+			{
+				"buffer_size": 5216,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "package bootstrap.liftweb\n\nimport net.liftweb._\nimport util._\nimport Helpers._\n\nimport common._\nimport http._\nimport js.jquery.JQueryArtifacts\nimport sitemap._\nimport Loc._\nimport mapper._\n\nimport code.model._\nimport net.liftmodules.JQueryModule\n\n\n/**\n * A class that's instantiated early and run.  It allows the application\n * to modify lift's environment\n */\nclass Boot {\n  def boot {\n    if (!DB.jndiJdbcConnAvailable_?) {\n      val vendor = \n	new StandardDBVendor(Props.get(\"db.driver\") openOr \"org.h2.Driver\",\n			     Props.get(\"db.url\") openOr \n			     \"jdbc:h2:lift_proto.db;AUTO_SERVER=TRUE\",\n			     Props.get(\"db.user\"), Props.get(\"db.password\"))\n\n      LiftRules.unloadHooks.append(vendor.closeAllConnections_! _)\n\n      DB.defineConnectionManager(DefaultConnectionIdentifier, vendor)\n    }\n\n    // Use Lift's Mapper ORM to populate the database\n    // you don't need to use Mapper to use Lift... use\n    // any ORM you want\n    Schemifier.schemify(true, Schemifier.infoF _, User)\n\n    // where to search snippet\n    LiftRules.addToPackages(\"code\")\n\n    // Build SiteMap\n    def sitemap = SiteMap(\n      Menu.i(\"Home\") / \"index\" >> User.AddUserMenusAfter, // the simple way to declare a menu\n\n      // more complex because this menu allows anything in the\n      // /static path to be visible\n      Menu(Loc(\"Static\", Link(List(\"static\"), true, \"/static/index\"),  \"Static Content\")))\n\n    def sitemapMutators = User.sitemapMutator\n\n    // set the sitemap.  Note if you don't want access control for\n    // each page, just comment this line out.\n    LiftRules.setSiteMapFunc(() => sitemapMutators(sitemap))\n\n    //Init the jQuery module, see http://liftweb.net/jquery for more information.\n    LiftRules.jsArtifacts = JQueryArtifacts\n    JQueryModule.InitParam.JQuery=JQueryModule.JQuery172\n    JQueryModule.init()\n\n    //Show the spinny image when an Ajax call starts\n    LiftRules.ajaxStart =\n      Full(() => LiftRules.jsArtifacts.show(\"ajax-loader\").cmd)\n    \n    // Make the spinny image go away when it ends\n    LiftRules.ajaxEnd =\n      Full(() => LiftRules.jsArtifacts.hide(\"ajax-loader\").cmd)\n\n    // Force the request to be UTF-8\n    LiftRules.early.append(_.setCharacterEncoding(\"UTF-8\"))\n\n    // What is the function to test if a user is logged in?\n    LiftRules.loggedInTest = Full(() => User.loggedIn_?)\n\n    // Use HTML5 for rendering\n    LiftRules.htmlProperties.default.set((r: Req) =>\n      new Html5Properties(r.userAgent))    \n\n    // Make a transaction span the whole HTTP request\n    S.addAround(DB.buildLoanWrapper)\n  }\n}\n",
+			"file": "WDSLExplorer/src/main/scala/bootstrap/liftweb/Boot.scala",
+			"file_size": 2562,
+			"file_write_time": 129918906100000000,
+			"settings":
+			{
+				"buffer_size": 2554,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Harrie/Desktop/index.html",
+			"settings":
+			{
+				"buffer_size": 6736,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Harrie/AppData/Local/Temp/Rar$EX50.888/foundation_icons_general/demo.html",
+		"/C/Users/Harrie/AppData/Local/Temp/Rar$EX46.888/foundation_icons_general_enclosed/demo.html",
+		"/C/Github/WACC2012/WDSLExplorer/src/main/scala/bootstrap/liftweb/Boot.scala",
+		"/C/Github/WACC2012/lift_basic/src/main/webapp/index.html",
+		"/C/Github/WACC2012/WDSLExplorer/src/main/webapp/templates-hidden/wizard-all.html",
+		"/C/wamp/www/L4B/index.html",
+		"/C/Users/Harrie/Documents/GitHub/WACC2012/README.md",
+		"/C/Users/Harrie/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/wamp/www/L4B/css/main.css",
+		"/C/Lift/README.md",
+		"/C/wamp/www/Bencom/L4B/result/index.html",
+		"/C/wamp/www/Bencom/L4B/result/css/main.css",
+		"/C/Users/Harrie/Dropbox/kickstart/Klanten/Vodoz/Wireframes/index.html"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Menu.title",
+			" <img class=\"mundiHotelImg\" src=\"http://www.lookingforbooking.nl/HotelImages/botelmaastricht_thumb.jpg\" />",
+			"img",
+			"mundiCenter"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "WDSLExplorer/src/main/webapp/index.html",
+					"settings":
+					{
+						"buffer_size": 452,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								360,
+								360
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "WDSLExplorer/src/main/webapp/templates-hidden/default.html",
+					"settings":
+					{
+						"buffer_size": 5216,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3299,
+								3302
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1185.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "WDSLExplorer/src/main/scala/bootstrap/liftweb/Boot.scala",
+					"settings":
+					{
+						"buffer_size": 2554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1496,
+								1496
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 495.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/C/Users/Harrie/Desktop/index.html",
+					"settings":
+					{
+						"buffer_size": 6736,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								758,
+								935
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
